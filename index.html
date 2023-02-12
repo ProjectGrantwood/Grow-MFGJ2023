@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Grow</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <script src="https://kit.fontawesome.com/b0abc33d87.js" crossorigin="anonymous"></script>
+    <script src="src/initialMap.js"></script>
+    <script src="src/cellTypes.js" defer></script>
+    <script src="src/cropTypes.js"></script>
+    <script src="src/grid.js" defer></script>
+    <script src="src/player.js"></script>
+    <script src="src/pageNavigation.js" defer></script>
+    <script src="src/tick.js" defer></script>
+</head>
+
+<body>
+    <div id="page-container">
+        <div id="grid-container">
+            
+            <!-- SIDEBAR -->
+            
+            <div id="sidebar-container">
+                <h4>Tools</h4>
+                <div id="tool-button-container">
+                    <button id="bulldozer" class="tool-button tool-button-inactive tooltip"
+                        onclick="PLAYER.setActiveTool('bulldozer')"
+                        data-tooltip="Bulldozer: remove rocks/dig channels"><i
+                            class="fa-solid fa-snowplow"></i></button>
+                    <button id="hoe" class="tool-button tool-button-inactive tooltip"
+                        onclick="PLAYER.setActiveTool('hoe')" data-tooltip="Hoe: till vacant land"><i
+                            class="fa-solid fa-screwdriver"></i></button>
+                    <button id="basket" class="tool-button tool-button-inactive tooltip"
+                        onclick="PLAYER.setActiveTool('basket')" data-tooltip="Basket: Harvest fully-grown crops"><i
+                            class="fa-solid fa-bucket"></i></button>
+                    <button id="trowel" class="tool-button tool-button-inactive tooltip"
+                        onclick="PLAYER.setActiveTool('trowel')" data-tooltip="Trowel: Plant seeds"><i
+                            class="fa-solid fa-trowel"></i></button>
+                </div>
+                <div id="point-display"></div>
+                <h4>Seeds</h4>
+                <div id="no-seeds" class="empty">
+                    <p class="empty-title h4">You don't own any seeds.</p>
+                </div>
+                <table id="seed-table" class="table" hidden>
+                    <tbody id="seed-table-body">
+                        <th>Seed Type</th>
+                        <th>Amount</th>
+                        <th>Select</th>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- LOGO -->
+            
+            <h4 id="logo">HARVEST GRID</h4>
+            
+            <!-- NAVBAR -->
+            
+            <header id="navbar" class="navbar">
+                <section class="navbar-section">
+                    <button class="btn-link" onclick="changeTab('cell-container')">Farm</button>
+                </section>
+                <section class="navbar-center">
+                    <h3 id="money-display" class="label-primary">$ 10</h3>
+                </section>
+                <section class="navbar-section">
+                    <button class="btn-link" onclick="changeTab('seed-shop')">Seed Shop</button>
+                </section>
+                
+            </header>
+            
+            <!-- TAB-VIEW: contains all elements of the active "tab" -->
+            
+            <div id="tab-view-container">
+                
+                <!-- FARM TAB -->
+                
+                <div id="cell-container" class="hero-body hero-lg">
+                    <i id="cell0-0" class="cell empty" onclick="PLAYER.actOnTile(0, 0)"></i>
+                    <i id="cell0-1" class="cell empty" onclick="PLAYER.actOnTile(0, 1)"></i>
+                    <i id="cell0-2" class="cell empty" onclick="PLAYER.actOnTile(0, 2)"></i>
+                    <i id="cell0-3" class="cell empty" onclick="PLAYER.actOnTile(0, 3)"></i>
+                    <i id="cell0-4" class="cell empty" onclick="PLAYER.actOnTile(0, 4)"></i>
+                    <i id="cell0-5" class="cell empty" onclick="PLAYER.actOnTile(0, 5)"></i>
+                    <i id="cell1-0" class="cell empty" onclick="PLAYER.actOnTile(1, 0)"></i>
+                    <i id="cell1-1" class="cell empty" onclick="PLAYER.actOnTile(1, 1)"></i>
+                    <i id="cell1-2" class="cell empty" onclick="PLAYER.actOnTile(1, 2)"></i>
+                    <i id="cell1-3" class="cell empty" onclick="PLAYER.actOnTile(1, 3)"></i>
+                    <i id="cell1-4" class="cell empty" onclick="PLAYER.actOnTile(1, 4)"></i>
+                    <i id="cell1-5" class="cell empty" onclick="PLAYER.actOnTile(1, 5)"></i>
+                    <i id="cell2-0" class="cell empty" onclick="PLAYER.actOnTile(2, 0)"></i>
+                    <i id="cell2-1" class="cell empty" onclick="PLAYER.actOnTile(2, 1)"></i>
+                    <i id="cell2-2" class="cell empty" onclick="PLAYER.actOnTile(2, 2)"></i>
+                    <i id="cell2-3" class="cell empty" onclick="PLAYER.actOnTile(2, 3)"></i>
+                    <i id="cell2-4" class="cell empty" onclick="PLAYER.actOnTile(2, 4)"></i>
+                    <i id="cell2-5" class="cell empty" onclick="PLAYER.actOnTile(2, 5)"></i>
+                    <i id="cell3-0" class="cell empty" onclick="PLAYER.actOnTile(3, 0)"></i>
+                    <i id="cell3-1" class="cell empty" onclick="PLAYER.actOnTile(3, 1)"></i>
+                    <i id="cell3-2" class="cell empty" onclick="PLAYER.actOnTile(3, 2)"></i>
+                    <i id="cell3-3" class="cell empty" onclick="PLAYER.actOnTile(3, 3)"></i>
+                    <i id="cell3-4" class="cell empty" onclick="PLAYER.actOnTile(3, 4)"></i>
+                    <i id="cell3-5" class="cell empty" onclick="PLAYER.actOnTile(3, 5)"></i>
+                    <i id="cell4-0" class="cell empty" onclick="PLAYER.actOnTile(4, 0)"></i>
+                    <i id="cell4-1" class="cell empty" onclick="PLAYER.actOnTile(4, 1)"></i>
+                    <i id="cell4-2" class="cell empty" onclick="PLAYER.actOnTile(4, 2)"></i>
+                    <i id="cell4-3" class="cell empty" onclick="PLAYER.actOnTile(4, 3)"></i>
+                    <i id="cell4-4" class="cell empty" onclick="PLAYER.actOnTile(4, 4)"></i>
+                    <i id="cell4-5" class="cell empty" onclick="PLAYER.actOnTile(4, 5)"></i>
+                    <i id="cell5-0" class="cell empty" onclick="PLAYER.actOnTile(5, 0)"></i>
+                    <i id="cell5-1" class="cell empty" onclick="PLAYER.actOnTile(5, 1)"></i>
+                    <i id="cell5-2" class="cell empty" onclick="PLAYER.actOnTile(5, 2)"></i>
+                    <i id="cell5-3" class="cell empty" onclick="PLAYER.actOnTile(5, 3)"></i>
+                    <i id="cell5-4" class="cell empty" onclick="PLAYER.actOnTile(5, 4)"></i>
+                    <i id="cell5-5" class="cell empty" onclick="PLAYER.actOnTile(5, 5)"></i>
+                </div>
+                
+                <!-- SEED SHOP TAB -->
+                
+                <div id="seed-shop">
+                    <table class="table">
+                        <th>Seed Type</th>
+                        <th>Cost</th>
+                        <th></th>
+                        <tr>
+                            <td class="tinflower crop-label">Tinflower</td>
+                            <td>10</td>
+                            <td><button class="btn" onclick="PLAYER.purchaseSeed('tinflower')">Purchase</button></td>
+                        </tr>
+                        <tr>
+                            <td class="bronzeberry crop-label">Bronzeberry</td>
+                            <td>100</td>
+                            <td><button class="btn btn-disabled" onclick="PLAYER.purchaseSeed('bronzeberry')">Purchase</button></td>
+                        </tr>
+                        <tr>
+                            <td class="rhodiumvine crop-label">Rhodium Vine</td>
+                            <td>1,000</td>
+                            <td><button class="btn" onclick="PLAYER.purchaseSeed('rhodiumvine')">Purchase</button></td>
+                        </tr>
+                        <tr>
+                            <td class="silverroot crop-label">Silverroot</td>
+                            <td>10,000</td>
+                            <td><button class="btn" onclick="PLAYER.purchaseSeed('silverroot')">Purchase</button></td>
+                        </tr>
+                        <tr>
+                            <td class="goldengrain crop-label">Goldengrain</td>
+                            <td>100,000</td>
+                            <td><button class="btn" onclick="PLAYER.purchaseSeed('goldengrain')">Purchase</button></td>
+                        </tr>
+                        <tr>
+                            <td class="neonfruit crop-label">Neonfruit</td>
+                            <td>1,000,000</td>
+                            <td><button class="btn" onclick="PLAYER.purchaseSeed('neonfruit')">Purchase</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+</body>
+
+
+
+</html>
