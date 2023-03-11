@@ -62,7 +62,7 @@ const PLAYER = {
         if (!Object.keys(this.ownedSeeds).includes(cropType)) {
             this.ownedSeeds[cropType] = 0;
             let table = document.getElementById('seed-table-body');
-            table.innerHTML += `<tr><td>${CROPS[cropType].displayName}</td><td id="${cropType}-amount"></td><td><button class="btn btn-primary" onclick="PLAYER.setActiveSeed('${cropType}')">Select</button></tr>`
+            table.innerHTML += `<tr id="${cropType}-table-row" class="seed-table-inactive"><td>${CROPS[cropType].displayName}</td><td id="${cropType}-amount"></td><td><button class="btn btn-primary" onclick="PLAYER.setActiveSeed('${cropType}')">Select</button></tr>`
         }
         this.ownedSeeds[cropType] += amount;
         document.getElementById(`${cropType}-amount`).innerHTML = this.ownedSeeds[cropType];
@@ -70,15 +70,18 @@ const PLAYER = {
 
     setActiveSeed(seedType) {
         if (this.activeSeed === seedType) {
-            // TODO: code setting relevant GUI element to an "inactive" class
+            let tableRow = document.getElementById(`${seedType}-table-row`);
+            tableRow.className = "seed-table-inactive";
             this.activeSeed = 'none';
             return;
         }
         if (this.activeSeed !== 'none') {
-            // TODO: code setting relevant GUI element to an "inactive" class
+            let tableRow = document.getElementById(`${this.activeSeed}-table-row`);
+            tableRow.className = "seed-table-inactive";
         }
         this.activeSeed = seedType;
-        // TODO: code setting relevant GUI element to an "active" class
+        let tableRow = document.getElementById(`${seedType}-table-row`);
+        tableRow.className = "seed-table-active";
     },
 
     setActiveTool(toolID) {
@@ -140,7 +143,9 @@ const PLAYER = {
                         break;
                 }
             } else if (this.activeTool === 'trowel') {
-                this.plantSeed(this.activeSeed, x, y);
+                if (GRID.testNeighbors(this.activeSeed, x, y)){
+                    this.plantSeed(this.activeSeed, x, y);
+                }
             }
         }
     },

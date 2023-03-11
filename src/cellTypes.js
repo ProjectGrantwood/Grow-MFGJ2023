@@ -24,7 +24,7 @@ const TYPES = {
     ),
     
     'tilled': createType(
-        'trowel',
+        'circle-exclamation',
         'Tilled Soil',
         'Soil readied for planting.',
         ['planted-growing', 'tillable']
@@ -38,21 +38,21 @@ const TYPES = {
     ),
     
     'planted-ready': createType(
-        'wheat-awn-circle-exclamation',
+        'wheat-awn',
         'Harvestable Crop',
         'This crop is ready to be harvested and sold',
-        ['planted-inactive']
+        ['planted-inactive', 'tillable']
     ),
     
     'planted-growing': createType(
-        'wheat-awn',
+        'seedling',
         'Growing Crop',
         'This crop is growing just fine, but isn\'t yet ready for harvest',
         ['planted-ready', 'tillable']
     ),
     
     'planted-inactive': createType(
-        'seedling',
+        'trowel',
         'Inactive Crop',
         'This crop is currently out of season',
         ['tilled', 'planted-growing', 'tillable']
@@ -70,8 +70,8 @@ const TYPES = {
         'Irrigation Channel',
         'This channel allows you to water crops in dry areas.',
         ['tillable']
-    )
-
+    ),
+    
 }
 
 function createType(icon, displayName, tooltipText, to_types){
